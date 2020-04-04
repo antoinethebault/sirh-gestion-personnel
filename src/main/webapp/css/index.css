@@ -1,0 +1,6 @@
+body{
+    font-family: "Comic Sans Ms";
+}
+input, textarea{
+	width: 200px;
+}
