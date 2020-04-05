@@ -43,9 +43,6 @@ public class CreationCollaborateurController extends HttpServlet{
 		
 		// chargement des propriétés
         Properties prop = PropertyLoader.load("application.properties");
-        
-        //recupere la liste des collaborateurs
-		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 		
 		//on recupere les infos du formulaire 
 		//et on cree les infos manquantes
@@ -60,8 +57,6 @@ public class CreationCollaborateurController extends HttpServlet{
 		LocalDate dateNaissance = null;
 		String chaine = req.getParameter("dateNaissance");
 		String regex = "^[0-3]?[0-9]/[0-3]?[0-9]/[0-9]{4}$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(chaine);
 		if(Pattern.matches(regex,chaine)) {
 			String[] tableau = chaine.split("/");
 			dateNaissance = LocalDate.of(Integer.valueOf(tableau[2]), Integer.valueOf(tableau[1]), Integer.valueOf(tableau[0]));
@@ -84,7 +79,10 @@ public class CreationCollaborateurController extends HttpServlet{
 					numeroSecuriteSociale, emailPro, "", dateHeureCreation, true);
 			collabService.sauvegarderCollaborateur(collaborateur);
 			
-			req.setAttribute("listeNoms", Arrays.asList("Robert", "Jean", "Hugues")); 
+			//recupere la liste des collaborateurs
+			List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+			
+			req.setAttribute("collaborateurs", collaborateurs); 
 			req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
 			.forward(req, resp);
 		}
