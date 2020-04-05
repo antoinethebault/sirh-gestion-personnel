@@ -76,7 +76,7 @@ public class CreationCollaborateurController extends HttpServlet{
 		if(erreurs.isEmpty()) {
 			//on enregistre le collaborateur
 			Collaborateur collaborateur = new Collaborateur (matricule, nom, prenom, dateNaissance, adresse,
-					numeroSecuriteSociale, emailPro, "", dateHeureCreation, true);
+					numeroSecuriteSociale, emailPro, "photo.png", dateHeureCreation, true);
 			collabService.sauvegarderCollaborateur(collaborateur);
 			
 			//recupere la liste des collaborateurs
