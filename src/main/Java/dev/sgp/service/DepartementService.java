@@ -1,4 +1,4 @@
-package dev.sgp.service;
+	package dev.sgp.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class DepartementService {
 	 */
 	public DepartementService () {
 		/**Initialise la liste avec des valeurs*/
-		Departement departement1 = new Departement("Comptabilite");
+		Departement departement1 = new Departement("Comptabilité");
 		Departement departement2 = new Departement("Ressources Humaines");
 		Departement departement3 = new Departement("Informatique");
 		Departement departement4 = new Departement("Administratif");
@@ -47,6 +47,11 @@ public class DepartementService {
 		return departements;
 	}
 	
+	/**
+	 * rechercherDepartement 
+	 * @param nom
+	 * @return le departement recherche ou un nouveau
+	 */
 	public Departement rechercherDepartement(String nom) {
 		for (Departement departement : departements) {
 			if (departement.getNom().equals(nom))

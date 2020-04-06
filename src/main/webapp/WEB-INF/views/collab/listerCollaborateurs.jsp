@@ -5,10 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>SGP - App</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/bootstrap-4.4-2.1-dist/css/bootstrap.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/lister.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap-4.4-2.1-dist/css/bootstrap.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/lister.css">
+<script src="<%=request.getContextPath()%>/js/listerCollaborateur.js"></script>
 </head>
 <body>
 	
@@ -20,26 +19,49 @@
 		</div>
 
 		<div class="row">
-			<form action="rechercher" method="post">
-				<label for="recherche">Rechercher un nom ou un prenom qui
-					commence par : </label> <input type="text" id="recherche" name="recherche" />
+			<form action="lister" method="post">
+				<label for="recherche">Rechercher un nom ou un prenom qui commence par : </label> 
+				<input type="text" id="recherche" name="recherche"/>
 				<input type="submit" value="Rechercher" />
 			</form>
 			<div class="ml-auto mr-auto center-block">
-				<input type="checkbox" id="desactive" name="desactive" /> <label
-					for="desactive">Voir les collaborateurs désactivés</label>
+				<form method="post" action="lister" id="formdesactive">
+					<% Object desactiveactif = request.getAttribute("desactiveactif"); 
+					if (desactiveactif != null){%>
+						<input type="checkbox" id="desactive" name="desactive" checked onclick="DoSubmit()"/> 
+					<%}else{ %>
+						<input type="checkbox" id="desactive" name="desactive" onclick="DoSubmit()"/> 
+					<%} %>
+					<label for="desactive">Voir les collaborateurs désactivés</label>
+				</form>
 			</div>
 		</div>
 		<div class="row">
 			<div>
-				<label for="departement">Filtrer par département : </label> <select
-					name="departement" id="departement">
-					<option value="">Tous</option>
-					<option value="comptabilite">Comptabilité</option>
-					<option value="ressourceshumaines">Ressources Humaines</option>
-					<option value="informatique">Informatique</option>
-					<option value="administratif">Administratif</option>
-				</select>
+			<%String filtrer = (String) request.getAttribute("filtrer"); %>
+				<form id="filtrer" method="post" action="lister">
+				<label for="departement">Filtrer par département : </label>
+					<select name="departement" id="departement" onchange="filtrer()">
+						<option value="">Tous</option>
+						<%if (("comptabilite").equals(filtrer)){ %>
+						<option value="comptabilite" selected>Comptabilité</option>
+						<%}else{ %>
+						<option value="comptabilite">Comptabilité</option>
+						<%} if (("ressources humaines").equals(filtrer)){%>
+						<option value="ressources humaines" selected>Ressources Humaines</option>
+						<%}else{ %>
+						<option value="ressources humaines">Ressources Humaines</option>
+						<%} if (("informatique").equals(filtrer)){%>
+						<option value="informatique" selected>Informatique</option>
+						<%}else{ %>
+						<option value="informatique">Informatique</option>
+						<%} if (("administratif").equals(filtrer)){%>
+						<option value="administratif" selected>Administratif</option>
+						<%}else{ %>
+						<option value="administratif">Administratif</option>
+						<%} %>
+					</select>
+				</form>
 			</div>
 		</div>
 		</br>
@@ -47,9 +69,7 @@
 		<div class="row">
 			<%
 				List<Collaborateur> collaborateurs = (List<Collaborateur>) request.getAttribute("collaborateurs");
-				PhotoLoader photoLoader = new PhotoLoader();
 				for (Collaborateur collaborateur : collaborateurs) {
-					String photo = photoLoader.loadPhoto(collaborateur.getPhoto());
 			%>
 			<div class="element m-2 col-sm-8 col-md-6 col-lg-5">
 				<div>
@@ -91,6 +111,5 @@
 			%>
 		</div>
 	</div>
-	
 </body>
 </html>

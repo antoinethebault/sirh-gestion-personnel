@@ -1,6 +1,7 @@
 package dev.sgp.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -29,4 +30,32 @@ public class ListerCollaborateursController extends HttpServlet {
 		.forward(req, resp);	
 	}
 	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+		
+		//on verifie si des elements de recherche sont renseignes
+		String debut = req.getParameter("recherche");
+		if (debut != null) {
+			debut = debut.toLowerCase();
+			collaborateurs = collabService.getCollaborateursDebut(debut);
+		}
+		
+		String desactive = req.getParameter("desactive");
+		if(desactive != null) {
+			collaborateurs = collabService.listerCollaborateursAll();
+			req.setAttribute("desactiveactif", true);
+		}
+		
+		String departement = req.getParameter("departement");
+		if (departement != null && !departement.equals("")) {
+			collaborateurs = collabService.listerCollaborateursDepartmt(departement);
+			req.setAttribute("filtrer", departement);
+		}
+		
+		//on fait le dispatch
+		req.setAttribute("collaborateurs", collaborateurs); 
+		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
+		.forward(req, resp);
+	}
 }
