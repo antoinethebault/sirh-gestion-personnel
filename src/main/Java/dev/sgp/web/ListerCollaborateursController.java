@@ -1,7 +1,6 @@
 package dev.sgp.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -38,7 +37,7 @@ public class ListerCollaborateursController extends HttpServlet {
 		String debut = req.getParameter("recherche");
 		if (debut != null) {
 			debut = debut.toLowerCase();
-			collaborateurs = collabService.getCollaborateursDebut(debut);
+			collaborateurs = collabService.getCollaborateursDebut(debut); 
 		}
 		
 		String desactive = req.getParameter("desactive");

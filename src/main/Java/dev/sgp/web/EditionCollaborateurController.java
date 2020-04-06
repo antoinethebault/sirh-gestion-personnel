@@ -41,7 +41,7 @@ public class EditionCollaborateurController extends HttpServlet{
 		collaborateur.setIntitulePoste(intitulePoste);
 		
 		String departement = req.getParameter("departement");
-		collaborateur.setDepartement(departmtService.rechercherDepartement(departement));
+		collaborateur.setDepartement(DepartementService.rechercherDepartement(departement));
 		
 		String banque = req.getParameter("banque");
 		collaborateur.setBanque(banque);

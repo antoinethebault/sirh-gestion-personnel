@@ -3,13 +3,9 @@ package dev.sgp.web;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -55,13 +51,25 @@ public class CreationCollaborateurController extends HttpServlet{
 		//on verifie la date de naissance et on la configure en date
 		LocalDate dateNaissance = null;
 		String chaine = req.getParameter("dateNaissance");
-		String regex = "^[0-3]?[0-9]/[0-3]?[0-9]/[0-9]{4}$";
-		if(Pattern.matches(regex,chaine)) {
-			String[] tableau = chaine.split("/");
-			dateNaissance = LocalDate.of(Integer.valueOf(tableau[2]), Integer.valueOf(tableau[1]), Integer.valueOf(tableau[0]));
+		if (chaine.contains("/")) {
+			String regex = "^[0-3]?[0-9]/[0-1]?[0-9]/[0-9]{4}$";
+			if(Pattern.matches(regex,chaine)) {
+				String[] tableau = chaine.split("/");
+				dateNaissance = LocalDate.of(Integer.valueOf(tableau[2]), Integer.valueOf(tableau[1]), Integer.valueOf(tableau[0]));
 			
-		}else {
-			erreurs.add(" la date de naissance doit etre au format JJ/MM/AAAA ");
+			}else {
+				erreurs.add(" la date de naissance doit etre au format JJ/MM/AAAA ");
+			}
+		}
+		else if (chaine.contains("-")) {
+			String regex = "^[0-9]{4}-[0-1]?[0-9]-[0-3]?[0-9]$";
+			if(Pattern.matches(regex,chaine)) {
+				String[] tableau = chaine.split("-");
+				dateNaissance = LocalDate.of(Integer.valueOf(tableau[0]), Integer.valueOf(tableau[1]), Integer.valueOf(tableau[2]));
+			
+			}else {
+				erreurs.add(" la date de naissance doit etre au format JJ/MM/AAAA ou AAAA-MM-JJ ");
+			}
 		}
 		
 		String adresse = req.getParameter("adresse");

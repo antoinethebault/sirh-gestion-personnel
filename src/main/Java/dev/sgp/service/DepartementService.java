@@ -12,7 +12,7 @@ import dev.sgp.entite.Departement;
  */
 public class DepartementService {
 
-	List<Departement> departements = new ArrayList<>();
+	static List<Departement> departements = new ArrayList<>();
 	
 	/**Constructor
 	 * 
@@ -52,12 +52,13 @@ public class DepartementService {
 	 * @param nom
 	 * @return le departement recherche ou un nouveau
 	 */
-	public Departement rechercherDepartement(String nom) {
+	public static Departement rechercherDepartement(String nom) {
 		for (Departement departement : departements) {
-			if (departement.getNom().equals(nom))
+			if (nom.equals(departement.getNom()))
 				return departement;
 		}
-		return new Departement(nom);
+		Departement departement = new Departement(nom);
+		return departement;
 	}
 	
 }

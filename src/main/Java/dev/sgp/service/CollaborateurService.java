@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.sgp.entite.Collaborateur;
-import dev.sgp.entite.Departement;
-import dev.sgp.util.Constantes;
 
 /**
  * CollaborateurService permet de lister les differents collaborateurs
@@ -15,8 +13,6 @@ import dev.sgp.util.Constantes;
  */
 public class CollaborateurService {
 	List<Collaborateur> listeCollaborateurs = new ArrayList<>();
-	// recuperation du service
-	private DepartementService departmtService = Constantes.DEPARTMT_SERVICE;
 	
 	/**
 	 * Constructor
@@ -29,9 +25,9 @@ public class CollaborateurService {
 				"123456789012345", "albert.duchene@societe.com", "photo.png", ZonedDateTime.now(), true);
 		Collaborateur collaborateur3 = new Collaborateur("Dutrain", "Rene", LocalDate.of(1980, 3, 3), "1, rue des lilas, 35000 Rennes",
 				"123456789012345", "rene.dutrain@societe.com", "photo.png", ZonedDateTime.now(), true);
-		collaborateur1.setDepartement(new Departement("Informatique"));
-		collaborateur2.setDepartement(new Departement("Administratif"));
-		collaborateur3.setDepartement(new Departement("Administratif"));
+		collaborateur1.setDepartement(DepartementService.rechercherDepartement("Informatique"));
+		collaborateur2.setDepartement(DepartementService.rechercherDepartement("Administratif"));
+		collaborateur3.setDepartement(DepartementService.rechercherDepartement("Administratif"));
 		sauvegarderCollaborateur(collaborateur1);
 		sauvegarderCollaborateur(collaborateur2);
 		sauvegarderCollaborateur(collaborateur3);
