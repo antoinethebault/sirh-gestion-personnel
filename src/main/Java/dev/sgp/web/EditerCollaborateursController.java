@@ -9,9 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dev.sgp.entite.Collaborateur;
+import dev.sgp.service.CollaborateurService;
+import dev.sgp.util.Constantes;
+
 public class EditerCollaborateursController extends HttpServlet {
 	private static final long serialVersionUID = -2796943719061702802L;
 
+	// recuperation du service
+	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -41,36 +48,33 @@ public class EditerCollaborateursController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//on recupere le matricule envoye
 		String matricule = req.getParameter("matricule");
-		String titre = req.getParameter("titre");
-		String nom = req.getParameter("nom");
-		String prenom = req.getParameter("prenom");
 		
 		//on fait une liste pour les erreurs remontees pour les
 		//parametres manquants
 		List<String> erreurs = new ArrayList<>();
-		
 		if (matricule==null) 
 			erreurs.add("matricule");
-		if (titre==null)
-			erreurs.add("titre");
-		if (nom==null)
-			erreurs.add("nom");
-		if (prenom==null)
-			erreurs.add("prenom");
 		
-		if(erreurs.isEmpty()) {//si on a pas d'erreur
+		//on recherche le collaborateur par son matricule
+		Collaborateur collaborateur = collabService.getCollaborateur(matricule);
+		
+		if(erreurs.isEmpty() && collaborateur != null) {//si on a pas d'erreur
 			resp.setStatus(201);
-			resp.getWriter().write("<html><body>");
-			resp.getWriter().write("Creation d’un collaborateur avec les informations suivantes :");
-			resp.getWriter().write("matricule="+matricule+", titre="+titre+", nom="+nom+", prenom="+prenom);
-			resp.getWriter().write("</body></html>");
+			req.setAttribute("collaborateur", collaborateur); 
+			req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp")
+			.forward(req, resp);
 		}
-		else {//si on a une erreur
+		else if (!erreurs.isEmpty()){//si on a une erreur
 			resp.setStatus(400);
 			resp.getWriter().write("Les paramètres suivants sont incorrects :");
 			for (String chaine : erreurs) 
 				resp.getWriter().write(chaine+" ");
+		}
+		else { //si le collaborateur n'a pas été trouvé
+			resp.setStatus(400);
+			resp.getWriter().write("Le collaborateur n'a pas été trouvé");
 		}
 		
 	}

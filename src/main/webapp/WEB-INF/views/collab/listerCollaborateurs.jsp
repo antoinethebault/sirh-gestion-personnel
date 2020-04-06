@@ -11,9 +11,11 @@
 	href="<%=request.getContextPath()%>/css/lister.css">
 </head>
 <body>
+	
 	<div class="container">
 		<div class=row">
 			<h1>Les collaborateurs</h1>
+			<a href="/sgp/">Accueil</a>
 			</br>
 		</div>
 
@@ -56,7 +58,7 @@
 				</div>
 				<hr>
 				<div>
-					<img src="<%=photo %>" alt="photo">
+					<img src="<%=request.getContextPath()%>/photo.png" alt="photo"/>
 					<div class="table-responsive">
 						<table class="table table-sm">
 							<tbody>
@@ -77,7 +79,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<td></td><td><input id="editer" type="submit" value="Editer"/></td>
+									<td></td><td><form action="editer?matricule=<%= collaborateur.getMatricule() %>" method="post"><input id="editer" type="submit" value="Editer"/></form></td>
 								</tr>
 							</tbody>	
 						</table>
@@ -89,5 +91,6 @@
 			%>
 		</div>
 	</div>
+	
 </body>
 </html>

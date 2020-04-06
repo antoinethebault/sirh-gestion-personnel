@@ -18,6 +18,10 @@
 		<servlet-name>CreationCollaborateurController</servlet-name>
 		<servlet-class>dev.sgp.web.CreationCollaborateurController</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>EditionCollaborateurController</servlet-name>
+		<servlet-class>dev.sgp.web.EditionCollaborateurController</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>ListerCollaborateursController</servlet-name>
@@ -34,6 +38,10 @@
 	<servlet-mapping>
 		<servlet-name>CreationCollaborateurController</servlet-name>
 		<url-pattern>/collaborateurs/creation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditionCollaborateurController</servlet-name>
+		<url-pattern>/collaborateurs/edition</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

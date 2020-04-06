@@ -23,10 +23,12 @@ public class DepartementService {
 		Departement departement2 = new Departement("Ressources Humaines");
 		Departement departement3 = new Departement("Informatique");
 		Departement departement4 = new Departement("Administratif");
+		Departement departement5 = new Departement("");
 		sauvegarderDepartement(departement1);
 		sauvegarderDepartement(departement2);
 		sauvegarderDepartement(departement3);
 		sauvegarderDepartement(departement4);
+		sauvegarderDepartement(departement5);
 	}
 	
 	/**
@@ -43,6 +45,14 @@ public class DepartementService {
 	 */
 	public List<Departement> listerDepartement(){
 		return departements;
+	}
+	
+	public Departement rechercherDepartement(String nom) {
+		for (Departement departement : departements) {
+			if (departement.getNom().equals(nom))
+				return departement;
+		}
+		return new Departement(nom);
 	}
 	
 }

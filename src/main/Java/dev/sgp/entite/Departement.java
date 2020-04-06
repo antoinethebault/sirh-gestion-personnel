@@ -54,5 +54,9 @@ public class Departement {
 		this.nom = nom;
 	}
 	
+	@Override
+	public String toString() {
+		return this.nom;
+	}
 	
 }

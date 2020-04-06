@@ -2,12 +2,16 @@ package dev.sgp.entite;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author antoinethebault
  *
  */
 public class Collaborateur {
+	
+	private static final AtomicInteger count = new AtomicInteger(0);
+	
 	/**String matricule */
 	private String matricule;
 	/**String nom */
@@ -32,6 +36,12 @@ public class Collaborateur {
 	private String intitulePoste;
 	/**departement : Departement*/
 	private Departement departement;
+	/**banque : String*/
+	private String banque;
+	/**bic : String*/
+	private String bic;
+	/**iban : String*/
+	private String iban;
 	
 	/**
 	 * @param matricule
@@ -45,11 +55,11 @@ public class Collaborateur {
 	 * @param dateHeureCreation
 	 * @param actif
 	 */
-		public Collaborateur(String matricule, String nom, String prenom, LocalDate dateNaissance, String adresse,
+		public Collaborateur(String nom, String prenom, LocalDate dateNaissance, String adresse,
 				String numeroSecuriteSociale, String emailPro, String photo, ZonedDateTime dateHeureCreation,
 				boolean actif) {
 		super();
-		this.matricule = matricule;
+		this.matricule = "M0"+count.incrementAndGet();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;
@@ -59,6 +69,11 @@ public class Collaborateur {
 		this.photo = photo;
 		this.dateHeureCreation = dateHeureCreation;
 		this.actif = actif;
+		this.intitulePoste = "";
+		this.departement = new Departement("");
+		this.banque = "";
+		this.bic = "";
+		this.iban = "";
 	}
 
 	/**
@@ -227,6 +242,48 @@ public class Collaborateur {
 	 */
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
+	}
+
+	/**Getter
+	 * @return the banque
+	 */
+	public String getBanque() {
+		return banque;
+	}
+
+	/**Setter
+	 * @param banque the banque to set
+	 */
+	public void setBanque(String banque) {
+		this.banque = banque;
+	}
+
+	/**Getter
+	 * @return the bic
+	 */
+	public String getBic() {
+		return bic;
+	}
+
+	/**Setter
+	 * @param bic the bic to set
+	 */
+	public void setBic(String bic) {
+		this.bic = bic;
+	}
+
+	/**Getter
+	 * @return the iban
+	 */
+	public String getIban() {
+		return iban;
+	}
+
+	/**Setter
+	 * @param iban the iban to set
+	 */
+	public void setIban(String iban) {
+		this.iban = iban;
 	}
 	
 }

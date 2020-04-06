@@ -46,7 +46,6 @@ public class CreationCollaborateurController extends HttpServlet{
 		
 		//on recupere les infos du formulaire 
 		//et on cree les infos manquantes
-		String matricule = "M"+(Math.random()*1000);
 		ZonedDateTime dateHeureCreation = ZonedDateTime.now();
 		
 		String prenom = req.getParameter("prenom");
@@ -75,7 +74,7 @@ public class CreationCollaborateurController extends HttpServlet{
 		
 		if(erreurs.isEmpty()) {
 			//on enregistre le collaborateur
-			Collaborateur collaborateur = new Collaborateur (matricule, nom, prenom, dateNaissance, adresse,
+			Collaborateur collaborateur = new Collaborateur (nom, prenom, dateNaissance, adresse,
 					numeroSecuriteSociale, emailPro, "photo.png", dateHeureCreation, true);
 			collabService.sauvegarderCollaborateur(collaborateur);
 			
